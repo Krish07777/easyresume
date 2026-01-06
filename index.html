@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EasyResume – Advanced Resume Builder</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+    body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(120deg, #2957ac, #2a5298, #fdfcfd);
+    background-size: 400% 400%;
+    animation: gradient3D 12s ease infinite;
+}
+
+/* Animation */
+@keyframes gradient3D {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+.dark {
+    background: #121212;
+    color: rgb(85, 4, 4);
+}
+
+/* HEADER */
+header {
+    background: #e7ecf1;
+    color: rgb(0, 69, 112);
+    padding: 15px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 100px;
+}
+
+/* LAYOUT */
+.container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.form-section, .resume-section {
+    background: rgb(241, 247, 248);
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+
+.dark .form-section,
+.dark .resume-section {
+    background: #1e1e1e;
+}
+
+.form-section { width: 40%; }
+.resume-section { width: 60%; }
+
+/* FORM */
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+/* TEMPLATES */
+.template-simple h2 { color: #007bff; border-bottom: 2px solid #007bff; }
+.template-modern h2 { color: #28a745; border-bottom: 2px solid #28a745; }
+.template-professional h2 { color: #6f42c1; border-bottom: 2px solid #6f42c1; }
+
+/* PHOTO */
+.photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .container { flex-direction: column; }
+    .form-section, .resume-section { width: 100%; }
+}
+
+/* PRINT */
+@media print {
+    header, .form-section, .footer { display: none; }
+    .resume-section { box-shadow: none; }
+}
+
+/* FOOTER */
+.footer {
+    background: #007bff;
+    color: white;
+    text-align: center;
+    padding: 18px;
+    margin-top: 30px;
+}
+
+.social-icons a {
+    display: inline-block;
+    margin: 0 8px;
+    width: 38px;
+    height: 38px;
+    line-height: 38px;
+    border-radius: 50%;
+    background: white;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.social-icons a:hover {
+    transform: translateY(-6px) scale(1.1);
+    box-shadow: 0 0 12px rgba(255,255,255,0.9);
+}
+.form-section, .resume-section {
+  position: relative;
+  border-radius: 15px;
+}
+
+.form-section::before,
+.resume-section::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg,#00f2fe,#4facfe,#6a11cb);
+  z-index: -1;
+  border-radius: 15px;
+}
+.resume-section h2 {
+  animation: glow 1.5s ease-in-out;
+}
+
+@keyframes glow {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.photo {
+  border: 4px solid transparent;
+  background: linear-gradient(white,white) padding-box,
+              linear-gradient(45deg,#00f2fe,#6a11cb) border-box;
+}
+button {
+  transition: 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 25px rgba(0,123,255,0.5);
+}
+.dark h2 {
+  color: #00f2fe;
+  text-shadow: 0 0 8px #00f2fe;
+}
+@media print {
+  body { background: white !important; }
+  .resume-section {
+    border: none;
+    box-shadow: none;
+  }
+}
+/* ===== FLOATING ACTION TOOLBAR ===== */
+.fab-toolbar {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 999;
+}
+
+.fab-toolbar button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #007bff, #6a11cb);
+    color: white;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    transition: all 0.3s ease;
+}
+
+.fab-toolbar button:hover {
+    transform: scale(1.15) rotate(6deg);
+    box-shadow: 0 15px 35px rgba(0,123,255,0.6);
+}
+
+/* Dark Mode FAB */
+.dark .fab-toolbar button {
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+}
+
+/* Hide in Print */
+@media print {
+    .fab-toolbar {
+        display: none;
+    }
+}
+.fab-toolbar {
+    animation: slideIn 1s ease forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translate(40px, -50%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0, -50%);
+    }
+}
+/* ===== MOBILE FAB POSITION ===== */
+@media (max-width: 768px) {
+    .fab-container {
+        right: 20px;
+        bottom: 20px;
+    }
+
+    .fab-main {
+        width: 56px;
+        height: 56px;
+        font-size: 28px;
+    }
+
+    .fab-actions {
+        margin-bottom: 10px;
+    }
+}
+/* ===== FLOATING ACTION TOOLBAR ===== */
+.fab-toolbar {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 999;
+}
+
+.fab-toolbar button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #007bff, #6a11cb);
+    color: white;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    transition: all 0.3s ease;
+}
+
+.fab-toolbar button:hover {
+    transform: scale(1.15) rotate(6deg);
+    box-shadow: 0 15px 35px rgba(0,123,255,0.6);
+}
+
+/* Dark Mode FAB */
+.dark .fab-toolbar button {
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+}
+
+/* Hide in Print */
+@media print {
+    .fab-toolbar {
+        display: none;
+    }
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <!-- Place logo.png in SAME folder as HTML -->
+    <img src="logo.png.png" class="logo" alt="EasyResume Logo">
+    <h1>EasyResume – Resume Builder</h1>
+</header>
+
+<div class="container">
+
+<!-- FORM -->
+<div class="form-section">
+    <h2>Enter Details</h2>
+
+    <select id="template" onchange="changeTemplate()">
+        <option value="simple">Simple</option>
+        <option value="modern">Modern</option>
+        <option value="professional">Professional</option>
+    </select>
+
+    <input type="file" accept="image/*" onchange="loadPhoto(event)">
+
+    <input type="text" id="name" placeholder="Full Name">
+    <input type="email" id="email" placeholder="Email">
+    <input type="text" id="phone" placeholder="Phone">
+    <input type="text" id="address" placeholder="Address">
+
+    <textarea id="objective" placeholder="Career Objective"></textarea>
+    <textarea id="education" placeholder="Education"></textarea>
+    <textarea id="skills" placeholder="Skills"></textarea>
+    <textarea id="projects" placeholder="Projects"></textarea>
+
+    <button onclick="generateResume()">Generate Resume</button>
+    <button onclick="saveData()">Save Data</button>
+    <button onclick="loadData()">Load Data</button>
+    <button onclick="toggleDark()">Dark / Light Mode</button>
+    <button onclick="window.print()">Download PDF</button>
+</div>
+
+<!-- RESUME -->
+<div class="resume-section template-simple" id="resume">
+    <center>
+        <img id="photo" class="photo">
+    </center>
+
+    <h2 id="rname">Your Name</h2>
+    <p><b>Email:</b> <span id="remail"></span></p>
+    <p><b>Phone:</b> <span id="rphone"></span></p>
+    <p><b>Address:</b> <span id="raddress"></span></p>
+
+    <h2>Career Objective</h2>
+    <p id="robjective"></p>
+
+    <h2>Education</h2>
+    <p id="reducation"></p>
+
+    <h2>Skills</h2>
+    <p id="rskills"></p>
+
+    <h2>Projects</h2>
+    <p id="rprojects"></p>
+</div>
+<div class="fab-container">
+    <button class="fab-main" onclick="toggleFab()">＋</button>
+
+    <div class="fab-actions">
+        <button onclick="toggleDark()" title="Dark Mode">🌓</button>
+        <button onclick="saveData()" title="Save">💾</button>
+        <button onclick="window.print()" title="Download PDF">📄</button>
+    </div>
+</div>
+
+
+</div>
+
+<script>
+function generateResume() {
+    rname.innerText = name.value;
+    remail.innerText = email.value;
+    rphone.innerText = phone.value;
+    raddress.innerText = address.value;
+    robjective.innerText = objective.value;
+    reducation.innerText = education.value;
+    rskills.innerText = skills.value;
+    rprojects.innerText = projects.value;
+}
+
+function changeTemplate() {
+    resume.className = "resume-section template-" + template.value;
+}
+
+function loadPhoto(event) {
+    photo.src = URL.createObjectURL(event.target.files[0]);
+}
+
+function saveData() {
+    localStorage.setItem("resumeData", JSON.stringify({
+        name: name.value,
+        email: email.value,
+        phone: phone.value,
+        address: address.value,
+        objective: objective.value,
+        education: education.value,
+        skills: skills.value,
+        projects: projects.value
+    }));
+    alert("Data Saved");
+}
+
+function loadData() {
+    const data = JSON.parse(localStorage.getItem("resumeData"));
+    if (!data) return;
+
+    name.value = data.name;
+    email.value = data.email;
+    phone.value = data.phone;
+    address.value = data.address;
+    objective.value = data.objective;
+    education.value = data.education;
+    skills.value = data.skills;
+    projects.value = data.projects;
+
+    generateResume();
+}
+
+function toggleDark() {
+    document.body.classList.toggle("dark");
+}
+</script>
+
+<footer class="footer">
+    <p>© 2026 EasyResume</p>
+    <div class="social-icons">
+        <a href="https://www.linkedin.com" target="_blank">in</a>
+        <a href="https://www.instagram.com" target="_blank">IG</a>
+        <a href="mailto:test@gmail.com">@</a>
+    </div>
+    <p>Developed by Krish</p>
+</footer>
+<div class="fab-toolbar">
+    <button title="Dark Mode" onclick="toggleDark()">🌓</button>
+    <button title="Save Resume" onclick="saveData()">💾</button>
+    <button title="Download PDF" onclick="window.print()">📄</button>
+</div>
+
+</body>
+</html>
